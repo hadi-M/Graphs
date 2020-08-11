@@ -1,7 +1,11 @@
+from pudb import set_trace as st
+
+
 """
 Simple graph implementation
 """
 from util import Stack, Queue  # These may come in handy
+
 
 class Graph:
 
@@ -13,33 +17,53 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        self.vertices[vertex_id] = []
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        self.vertices[v1].append(v2)
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        return self.vertices[v1]
 
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        visited = []
+        memory = Queue()
+        memory.enqueue(starting_vertex)
+        while memory.size() > 0:
+            # st()
+            next_elem = memory.dequeue()
+            if next_elem not in visited:
+                visited.append(next_elem)
+                for i in self.vertices[next_elem]:
+                    memory.enqueue(i)
+        print(visited)
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        visited = []
+        memory = Stack()
+        memory.push(starting_vertex)
+        while memory.size() > 0:
+            # st()
+            next_elem = memory.pop()
+            if next_elem not in visited:
+                visited.append(next_elem)
+                for i in self.vertices[next_elem]:
+                    memory.push(i)
+        print(visited)
 
     def dft_recursive(self, starting_vertex):
         """
@@ -48,7 +72,8 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        
+        
 
     def bfs(self, starting_vertex, destination_vertex):
         """
