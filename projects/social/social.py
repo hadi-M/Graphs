@@ -1,12 +1,19 @@
+import random
+from ipdb import set_trace as st
+from util import Queue
+
+
 class User:
     def __init__(self, name):
         self.name = name
 
+    def __repr__(self):
+        return f"{self.name}"
+
+
 class SocialGraph:
     def __init__(self):
-        self.last_id = 0
-        self.users = {}
-        self.friendships = {}
+        self.reset()
 
     def add_friendship(self, user_id, friend_id):
         """
@@ -28,6 +35,11 @@ class SocialGraph:
         self.users[self.last_id] = User(name)
         self.friendships[self.last_id] = set()
 
+    def reset(self):
+        self.last_id = 0
+        self.users = {}
+        self.friendships = {}
+
     def populate_graph(self, num_users, avg_friendships):
         """
         Takes a number of users and an average number of friendships
@@ -39,14 +51,25 @@ class SocialGraph:
         The number of users must be greater than the average number of friendships.
         """
         # Reset graph
-        self.last_id = 0
-        self.users = {}
-        self.friendships = {}
+        self.reset()
         # !!!! IMPLEMENT ME
 
         # Add users
+        for i in range(num_users):
+            self.add_user(f"User {i}")
 
         # Create friendships
+        possible_friendships = []
+        for user_id in self.users:
+            for friend_id in range(user_id+1, self.last_id+1):
+                possible_friendships.append((user_id, friend_id))
+
+        random.shuffle(possible_friendships)
+
+        for i in range(num_users * avg_friendships // 2):
+            frienship = possible_friendships[i]
+            self.add_friendship(frienship[0], frienship[1])
+
 
     def get_all_social_paths(self, user_id):
         """
@@ -57,8 +80,12 @@ class SocialGraph:
 
         The key is the friend's ID and the value is the path.
         """
-        visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+        visited = dict()  # Note that this is a dictionary, not a set
+        memory = Queue()
+        paths = []
+        
+
+        
         return visited
 
 
@@ -68,3 +95,4 @@ if __name__ == '__main__':
     print(sg.friendships)
     connections = sg.get_all_social_paths(1)
     print(connections)
+    st()

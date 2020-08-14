@@ -84,12 +84,7 @@ class Graph:
             if i not in visited:
                 self.dft_recursive(i, visited=visited)
 
-        
 
-
-        
-        
-        
 
     def bfs(self, starting_vertex, destination_vertex):
         """

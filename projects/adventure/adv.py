@@ -1,9 +1,13 @@
+from pudb import set_trace as st
+
 from room import Room
 from player import Player
 from world import World
 
 import random
 from ast import literal_eval
+from my_code import minimum_spanning_path as MSP
+from my_code import get_empty_map
 
 # Load world
 world = World()
@@ -16,7 +20,7 @@ world = World()
 # map_file = "maps/test_loop_fork.txt"
 map_file = "maps/main_maze.txt"
 
-# Loads the map into a dictionary
+# Loads the map into a dictionaryzz
 room_graph=literal_eval(open(map_file, "r").read())
 world.load_graph(room_graph)
 
@@ -26,11 +30,17 @@ world.print_rooms()
 player = Player(world.starting_room)
 
 # Fill this out with directions to walk
-# traversal_path = ['n', 'n']
-traversal_path = []
+
+# # get_empty_map(room_graph)
+traversal_path = MSP(room_graph, player, player.current_room.id)
+# traversal_path = []
 
 
 
+# traversal_path = traverse_map(player.current_room.id)
+
+
+# st()
 # TRAVERSAL TEST
 visited_rooms = set()
 player.current_room = world.starting_room
